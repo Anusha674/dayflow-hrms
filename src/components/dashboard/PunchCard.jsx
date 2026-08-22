@@ -15,10 +15,19 @@ export const PunchCard = ({ onPunchSuccess }) => {
   const [calculatedHours, setCalculatedHours] = useState('0h 0m');
 
   useEffect(() => {
-    if (activeUser) {
-      const punch = getActivePunch(activeUser.id);
-      setActivePunch(punch);
-    }
+    const handlePunchUpdate = () => {
+      if (activeUser) {
+        const punch = getActivePunch(activeUser.id);
+        setActivePunch(punch);
+      }
+    };
+
+    handlePunchUpdate();
+
+    window.addEventListener('dayflow_punch_update', handlePunchUpdate);
+    return () => {
+      window.removeEventListener('dayflow_punch_update', handlePunchUpdate);
+    };
   }, [activeUser]);
 
   useEffect(() => {

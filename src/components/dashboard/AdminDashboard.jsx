@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { getUsers, getLeaveRequests, getAttendance, getPayrollList, updateLeaveStatus } from '../../db/storage';
@@ -15,8 +15,21 @@ export const AdminDashboard = () => {
   const [departmentFilter, setDepartmentFilter] = useState('ALL');
 
   const [leaves, setLeaves] = useState(() => getLeaveRequests());
-  const [attendance, setAttendance] = useState(() => getAttendance());
-  const [payrolls, setPayrolls] = useState(() => getPayrollList());
+  const [punchRefreshTrigger, setPunchRefreshTrigger] = useState(0);
+
+  const attendance = getAttendance();
+  const payrolls = getPayrollList();
+
+  useEffect(() => {
+    const handlePunchUpdate = () => {
+      setPunchRefreshTrigger((prev) => prev + 1);
+    };
+
+    window.addEventListener('dayflow_punch_update', handlePunchUpdate);
+    return () => {
+      window.removeEventListener('dayflow_punch_update', handlePunchUpdate);
+    };
+  }, []);
 
   const pendingLeaves = leaves.filter((l) => l.status === 'PENDING');
   const todayDate = new Date().toISOString().split('T')[0];
@@ -234,7 +247,7 @@ export const AdminDashboard = () => {
                   <td>
                     <span className={`badge ${emp.role === 'ADMIN' ? 'badge-admin' : 'badge-info'}`}>{emp.role}</span>
                   </td>
-                  <td>{emp.phone || 'N/A'}</td>
+                  <td>{emp.phone || 'Not set'}</td>
                   <td>
                     <div style={{ display: 'flex', gap: '0.5rem' }}>
                       <button

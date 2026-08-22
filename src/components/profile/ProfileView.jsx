@@ -6,7 +6,7 @@ import { ProfileEditModal } from './ProfileEditModal';
 import { User, Mail, Phone, MapPin, Calendar, Briefcase, DollarSign, Edit3, Shield, FileText } from 'lucide-react';
 
 export const ProfileView = () => {
-  const { currentUser, activeUser, updateProfile } = useAuth();
+  const { currentUser, activeUser, updateProfile, refreshUsers } = useAuth();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const isAdminView = currentUser?.role === 'ADMIN';
@@ -15,6 +15,7 @@ export const ProfileView = () => {
   const handleSaveProfile = (updatedFields) => {
     if (isAdminView) {
       updateUserProfile(activeUser.id, updatedFields);
+      refreshUsers();
     } else {
       updateProfile(updatedFields);
     }
@@ -33,15 +34,17 @@ export const ProfileView = () => {
                 <span className={`badge ${activeUser.role === 'ADMIN' ? 'badge-admin' : 'badge-info'}`}>{activeUser.role}</span>
               </div>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
-                {activeUser.designation} • {activeUser.department}
+                {activeUser.designation}
               </p>
               <div style={{ display: 'flex', gap: '1rem', marginTop: '0.65rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <Mail size={14} /> {activeUser.email}
                 </span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <Phone size={14} /> {activeUser.phone || 'No phone added'}
-                </span>
+                {activeUser.phone && (
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <Phone size={14} /> {activeUser.phone}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -81,12 +84,12 @@ export const ProfileView = () => {
 
             <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-color)', pb: '0.5rem' }}>
               <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>Date of Birth</span>
-              <strong style={{ fontSize: '0.9rem' }}>{activeUser.dob || '1993-05-15'}</strong>
+              <strong style={{ fontSize: '0.9rem' }}>{activeUser.dob || 'Not set'}</strong>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-color)', pb: '0.5rem' }}>
               <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>Residential Address</span>
-              <strong style={{ fontSize: '0.9rem', textAlign: 'right', maxWidth: '240px' }}>{activeUser.address || 'Standard Address'}</strong>
+              <strong style={{ fontSize: '0.9rem', textAlign: 'right', maxWidth: '240px' }}>{activeUser.address || 'Not set'}</strong>
             </div>
           </div>
         </div>

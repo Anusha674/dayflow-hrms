@@ -52,20 +52,33 @@ export const PayrollPortal = () => {
           <span className="badge badge-paid">{userPayroll.paymentStatus}</span>
         </div>
 
-        <div className="grid-3" style={{ gap: '1rem', marginBottom: '1.25rem' }}>
-          <div style={{ background: 'var(--bg-main)', padding: '1rem', borderRadius: 'var(--radius-sm)' }}>
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>BASIC SALARY</span>
-            <div style={{ fontSize: '1.3rem', fontWeight: 800 }}>₹{userPayroll.basicSalary}</div>
+        <div className="grid-4" style={{ gap: '1rem', marginBottom: '1.25rem' }}>
+          <div className="liquid-glass" style={{ padding: '1.25rem', borderRadius: '12px', borderLeft: '4px solid #3B82F6', background: 'rgba(255,255,255,0.02)' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', minHeight: '2.2rem', display: 'flex', alignItems: 'center' }}>
+              BASIC SALARY
+            </span>
+            <div style={{ fontSize: '1.4rem', fontWeight: 800, marginTop: '0.5rem', color: '#ffffff' }}>₹{userPayroll.basicSalary}</div>
           </div>
 
-          <div style={{ background: 'var(--bg-main)', padding: '1rem', borderRadius: 'var(--radius-sm)' }}>
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>ALLOWANCES (HRA + SPECIAL)</span>
-            <div style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--accent)' }}>₹{userPayroll.hra + userPayroll.specialAllowance}</div>
+          <div className="liquid-glass" style={{ padding: '1.25rem', borderRadius: '12px', borderLeft: '4px solid #8B5CF6', background: 'rgba(255,255,255,0.02)' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', minHeight: '2.2rem', display: 'flex', alignItems: 'center' }}>
+              ALLOWANCES (HRA + SPECIAL)
+            </span>
+            <div style={{ fontSize: '1.4rem', fontWeight: 800, marginTop: '0.5rem', color: '#ffffff' }}>₹{userPayroll.hra + userPayroll.specialAllowance}</div>
           </div>
 
-          <div style={{ background: 'var(--bg-main)', padding: '1rem', borderRadius: 'var(--radius-sm)' }}>
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>NET TAKE-HOME SALARY</span>
-            <div style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--success)' }}>₹{userPayroll.netSalary}</div>
+          <div className="liquid-glass" style={{ padding: '1.25rem', borderRadius: '12px', borderLeft: '4px solid #F43F5E', background: 'rgba(255,255,255,0.02)' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', minHeight: '2.2rem', display: 'flex', alignItems: 'center' }}>
+              DEDUCTIONS (PF + TAX)
+            </span>
+            <div style={{ fontSize: '1.4rem', fontWeight: 800, marginTop: '0.5rem', color: '#F43F5E' }}>-₹{userPayroll.pfDeduction + userPayroll.taxDeduction}</div>
+          </div>
+
+          <div className="liquid-glass" style={{ padding: '1.25rem', borderRadius: '12px', borderLeft: '4px solid #10B981', background: 'rgba(255,255,255,0.02)' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', minHeight: '2.2rem', display: 'flex', alignItems: 'center' }}>
+              NET TAKE-HOME SALARY
+            </span>
+            <div style={{ fontSize: '1.4rem', fontWeight: 800, marginTop: '0.5rem', color: '#10B981' }}>₹{userPayroll.netSalary}</div>
           </div>
         </div>
       </div>

@@ -34,7 +34,7 @@ export const Navbar = ({ sidebarOpen, onToggleSidebar }) => {
   return (
     <header className="navbar relative z-10">
       {/* Sidebar Toggle & Brand Logo */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      <div className="navbar-left" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         {!sidebarOpen && (
           <button
             onClick={onToggleSidebar}
@@ -74,7 +74,7 @@ export const Navbar = ({ sidebarOpen, onToggleSidebar }) => {
       <div className="navbar-right">
         {/* Admin Impersonation Switcher Custom Dropdown */}
         {currentUser?.role === 'ADMIN' && (
-          <div style={{ position: 'relative' }}>
+          <div className="portal-switcher" style={{ position: 'relative' }}>
             <button
               onClick={() => setShowPortalDropdown(!showPortalDropdown)}
               className="liquid-glass"
@@ -87,7 +87,9 @@ export const Navbar = ({ sidebarOpen, onToggleSidebar }) => {
                 fontSize: '0.85rem',
                 cursor: 'pointer',
                 color: '#fff',
-                border: '1px solid rgba(255, 255, 255, 0.12)'
+                background: isViewingAsAnother ? 'rgba(16, 185, 129, 0.12)' : 'rgba(255, 255, 255, 0.08)',
+                border: isViewingAsAnother ? '1px solid rgba(16, 185, 129, 0.35)' : '1px solid rgba(255, 255, 255, 0.15)',
+                transition: 'all 0.25s ease'
               }}
               title="Switch Portal Impersonation View"
             >
@@ -109,7 +111,7 @@ export const Navbar = ({ sidebarOpen, onToggleSidebar }) => {
                   left: 0,
                   top: '42px',
                   width: '280px',
-                  background: 'rgba(0, 20, 38, 0.95)',
+                  background: 'rgba(0, 16, 32, 0.75)',
                   backdropFilter: 'blur(20px)',
                   borderRadius: '16px',
                   boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
@@ -205,9 +207,11 @@ export const Navbar = ({ sidebarOpen, onToggleSidebar }) => {
                 right: 0,
                 top: '48px',
                 width: '320px',
-                background: 'hsl(201, 100%, 13%)',
+                background: 'rgba(0, 16, 32, 0.75)',
+                backdropFilter: 'blur(20px)',
                 borderRadius: '20px',
                 boxShadow: '0 20px 40px rgba(0,0,0,0.6)',
+                border: '1px solid rgba(255,255,255,0.12)',
                 zIndex: 100,
                 padding: '1.1rem'
               }}
@@ -248,7 +252,7 @@ export const Navbar = ({ sidebarOpen, onToggleSidebar }) => {
         </div>
 
         {/* User Profile Info & Logout Pill */}
-        <div style={{ display: 'flex', alignItems: 'center', borderLeft: '1px solid rgba(255,255,255,0.15)', paddingLeft: '1.25rem' }}>
+        <div className="navbar-user" style={{ display: 'flex', alignItems: 'center', borderLeft: '1px solid rgba(255,255,255,0.15)', paddingLeft: '1.25rem' }}>
           <div className="liquid-glass profile-pill" style={{
             display: 'flex',
             alignItems: 'center',

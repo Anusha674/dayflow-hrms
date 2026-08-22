@@ -28,7 +28,7 @@ export const LeavePortal = () => {
   };
 
   const userLeaves = leavesList.filter((l) => l.userId === activeUser.id);
-  const displayedLeaves = viewScope === 'MY' ? userLeaves : leavesList;
+  const displayedLeaves = (isAdmin && viewScope === 'ALL') ? leavesList : userLeaves;
 
   const filteredLeaves = displayedLeaves.filter((l) => {
     if (statusFilter === 'ALL') return true;

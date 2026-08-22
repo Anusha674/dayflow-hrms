@@ -15,7 +15,7 @@ export const AttendanceTracker = () => {
   const allAttendance = getAttendance();
   const allUsersList = getUsers();
 
-  const displayList = viewMode === 'MY' ? myAttendance : allAttendance;
+  const displayList = (isAdmin && viewMode === 'ALL') ? allAttendance : myAttendance;
 
   const filteredList = displayList.filter((item) => {
     if (statusFilter === 'ALL') return true;

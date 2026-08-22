@@ -18,7 +18,16 @@ export const AdminPayrollEditor = ({ isOpen, onClose, user, payroll, onSave }) =
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(user.id, formData);
+    onSave(user.id, {
+      ...formData,
+      basicSalary: basic,
+      hra: hra,
+      specialAllowance: allowance,
+      pfDeduction: pf,
+      taxDeduction: tax,
+      grossSalary: gross,
+      netSalary: net
+    });
     showToast(`Salary structure updated for ${user.name}!`, 'success');
     onClose();
   };

@@ -3,6 +3,7 @@ import {
   initStorage,
   getUsers,
   findUserByEmail,
+  findUserByIdentifier,
   createUser,
   getCurrentUserSession,
   setCurrentUserSession,
@@ -14,8 +15,9 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [viewAsUser, setViewAsUser] = useState(null); // Admin impersonation switcher
+  const [viewAsUser, setViewAsUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [usersList, setUsersList] = useState([]);
 
   useEffect(() => {
     initStorage();
@@ -23,13 +25,14 @@ export const AuthProvider = ({ children }) => {
     if (session) {
       setCurrentUser(session);
     }
+    setUsersList(getUsers());
     setLoading(false);
   }, []);
 
-  const login = (email, password) => {
-    const user = findUserByEmail(email);
+  const login = (identifier, password) => {
+    const user = findUserByIdentifier(identifier);
     if (!user) {
-      throw new Error('No user found with this email address.');
+      throw new Error('No user found with this email, name, or Employee ID.');
     }
     if (user.password !== password) {
       throw new Error('Invalid password. Please check your credentials.');
@@ -49,6 +52,7 @@ export const AuthProvider = ({ children }) => {
     setCurrentUser(newUser);
     setCurrentUserSession(newUser);
     setViewAsUser(null);
+    setUsersList(getUsers());
     return newUser;
   };
 
@@ -63,8 +67,13 @@ export const AuthProvider = ({ children }) => {
     const updated = updateStorageProfile(currentUser.id, updatedFields);
     if (updated) {
       setCurrentUser(updated);
+      setUsersList(getUsers());
     }
     return updated;
+  };
+
+  const refreshUsers = () => {
+    setUsersList(getUsers());
   };
 
   // Admin feature: Switch view to inspect app as another employee
@@ -90,7 +99,8 @@ export const AuthProvider = ({ children }) => {
         logout,
         updateProfile,
         loading,
-        allUsers: getUsers()
+        refreshUsers,
+        allUsers: usersList
       }}
     >
       {children}

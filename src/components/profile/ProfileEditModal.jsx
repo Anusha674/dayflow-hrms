@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal } from '../common/Modal';
 import { useNotifications } from '../../context/NotificationContext';
 import { Save, User, Shield } from 'lucide-react';
@@ -7,17 +7,45 @@ export const ProfileEditModal = ({ isOpen, onClose, user, isAdminView, onSave })
   const { showToast } = useNotifications();
 
   const [formData, setFormData] = useState({
-    name: user?.name || '',
-    phone: user?.phone || '',
-    address: user?.address || '',
-    emergencyContact: user?.emergencyContact || '',
-    dob: user?.dob || '',
-    avatar: user?.avatar || '',
-    department: user?.department || '',
-    designation: user?.designation || '',
-    employeeId: user?.employeeId || '',
-    role: user?.role || 'EMPLOYEE'
+    name: '',
+    phone: '',
+    address: '',
+    emergencyContact: '',
+    dob: '',
+    avatar: '',
+    department: '',
+    designation: '',
+    employeeId: '',
+    role: 'EMPLOYEE'
   });
+
+  useEffect(() => {
+    if (user && isOpen) {
+      setFormData({
+        name: user.name || '',
+        phone: user.phone || '',
+        address: user.address || '',
+        emergencyContact: user.emergencyContact || '',
+        dob: user.dob || '',
+        avatar: user.avatar || '',
+        department: user.department || '',
+        designation: user.designation || '',
+        employeeId: user.employeeId || '',
+        role: user.role || 'EMPLOYEE'
+      });
+    }
+  }, [user, isOpen]);
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prev) => ({ ...prev, avatar: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -54,48 +82,54 @@ export const ProfileEditModal = ({ isOpen, onClose, user, isAdminView, onSave })
         </div>
 
         <div className="form-group">
-          <label className="form-label">Choose Profile Avatar</label>
-          <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap', marginTop: '0.5rem', background: 'rgba(255,255,255,0.03)', padding: '0.75rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }}>
-            {[
-              'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix',
-              'https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka',
-              'https://api.dicebear.com/7.x/avataaars/svg?seed=Jack',
-              'https://api.dicebear.com/7.x/avataaars/svg?seed=Milo',
-              'https://api.dicebear.com/7.x/avataaars/svg?seed=Sophia',
-              'https://api.dicebear.com/7.x/avataaars/svg?seed=Tigger',
-              'https://api.dicebear.com/7.x/avataaars/svg?seed=Leo',
-              'https://api.dicebear.com/7.x/avataaars/svg?seed=Buster'
-            ].map((url) => {
-              const isSelected = formData.avatar === url;
-              return (
-                <button
-                  key={url}
-                  type="button"
-                  onClick={() => setFormData({ ...formData, avatar: url })}
-                  style={{
-                    background: 'none',
-                    border: isSelected ? '2.5px solid #10B981' : '1px solid rgba(255,255,255,0.2)',
-                    borderRadius: '50%',
-                    padding: '2px',
-                    cursor: 'pointer',
-                    width: '46px',
-                    height: '46px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    boxShadow: isSelected ? '0 0 10px rgba(16, 185, 129, 0.4)' : 'none',
-                    transition: 'all 0.2s ease',
-                    transform: isSelected ? 'scale(1.08)' : 'scale(1)'
-                  }}
-                >
-                  <img
-                    src={url}
-                    alt="Avatar option"
-                    style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
-                  />
-                </button>
-              );
-            })}
+          <label className="form-label">Date of Birth</label>
+          <input
+            type="date"
+            className="form-input"
+            value={formData.dob}
+            onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
+          />
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">Profile Avatar</label>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', marginTop: '0.5rem' }}>
+            <img
+              src={formData.avatar || 'https://via.placeholder.com/150'}
+              alt="Avatar Preview"
+              style={{
+                width: '64px',
+                height: '64px',
+                borderRadius: '50%',
+                objectFit: 'cover',
+                border: '2px solid rgba(255, 255, 255, 0.2)'
+              }}
+            />
+            <div style={{ position: 'relative', flex: 1 }}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                style={{ display: 'none' }}
+                id="avatar-file-upload"
+              />
+              <label
+                htmlFor="avatar-file-upload"
+                className="btn btn-outline"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  cursor: 'pointer',
+                  padding: '0.65rem 1.25rem'
+                }}
+              >
+                Choose File...
+              </label>
+              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginLeft: '1rem' }}>
+                {formData.avatar ? 'Image selected' : 'No file chosen'}
+              </span>
+            </div>
           </div>
         </div>
 

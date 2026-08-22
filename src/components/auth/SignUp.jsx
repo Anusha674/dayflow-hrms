@@ -52,8 +52,8 @@ export const SignUp = ({ onSwitchToSignIn }) => {
         role: formData.role,
         department: formData.department,
         designation: formData.designation,
-        phone: formData.phone || '+1 (555) 100-2000',
-        address: formData.address || 'Standard Corporate Address'
+        phone: formData.phone || '',
+        address: formData.address || ''
       });
       showToast('Registration successful! Welcome to Dayflow HRMS.', 'success');
     } catch (err) {

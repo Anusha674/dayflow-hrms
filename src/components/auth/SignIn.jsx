@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNotifications } from '../../context/NotificationContext';
 import { Lock, Mail } from 'lucide-react';
@@ -9,6 +9,11 @@ export const SignIn = ({ onSwitchToSignUp }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    setEmail('');
+    setPassword('');
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,17 +58,17 @@ export const SignIn = ({ onSwitchToSignUp }) => {
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
           <div>
             <label style={{ fontSize: '0.75rem', fontWeight: 600, color: 'hsl(var(--muted-foreground))', marginBottom: '0.45rem', display: 'block' }}>
-              Work Email Address
+              Work Email, Name, or Employee ID
             </label>
             <div style={{ position: 'relative' }}>
               <Mail size={16} style={{ position: 'absolute', left: '1.1rem', top: '50%', transform: 'translateY(-50%)', color: 'hsl(var(--muted-foreground))' }} />
               <input
-                type="email"
+                type="text"
                 required
                 name="email"
-                autoComplete="username"
+                autoComplete="off"
                 className="form-input"
-                placeholder="name@company.com"
+                placeholder="Email, name, or EMP-XXXX"
                 value={email}
                 style={{ paddingLeft: '2.75rem' }}
                 onChange={(e) => setEmail(e.target.value)}
@@ -83,7 +88,7 @@ export const SignIn = ({ onSwitchToSignUp }) => {
                 type="password"
                 required
                 name="password"
-                autoComplete="current-password"
+                autoComplete="new-password"
                 className="form-input"
                 placeholder="••••••••"
                 value={password}

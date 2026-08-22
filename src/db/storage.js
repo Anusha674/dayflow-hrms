@@ -39,6 +39,43 @@ const setItem = (key, value) => {
 export const initStorage = () => {
   if (!localStorage.getItem(KEYS.USERS)) {
     setItem(KEYS.USERS, INITIAL_USERS);
+  } else {
+    // Migration: Clean up any dummy phone numbers or addresses saved on older test accounts
+    const users = getItem(KEYS.USERS, []);
+    let changed = false;
+    const migratedUsers = users.map((u) => {
+      let userChanged = false;
+      let newPhone = u.phone;
+      let newAddress = u.address;
+
+      if (u.id !== 'usr_admin') {
+        if (u.phone === '+1 (555) 100-2000') {
+          newPhone = '';
+          userChanged = true;
+        }
+        if (u.address === 'Standard Corporate Address') {
+          newAddress = '';
+          userChanged = true;
+        }
+      }
+
+      if (userChanged) {
+        changed = true;
+        return { ...u, phone: newPhone, address: newAddress };
+      }
+      return u;
+    });
+
+    if (changed) {
+      setItem(KEYS.USERS, migratedUsers);
+      const session = getCurrentUserSession();
+      if (session && session.id !== 'usr_admin') {
+        const updatedSession = migratedUsers.find((u) => u.id === session.id);
+        if (updatedSession) {
+          setCurrentUserSession(updatedSession);
+        }
+      }
+    }
   }
   if (!localStorage.getItem(KEYS.ATTENDANCE)) {
     setItem(KEYS.ATTENDANCE, INITIAL_ATTENDANCE);
@@ -48,6 +85,20 @@ export const initStorage = () => {
   }
   if (!localStorage.getItem(KEYS.PAYROLL)) {
     setItem(KEYS.PAYROLL, INITIAL_PAYROLL);
+  } else {
+    // Migration: Update any payroll item that has paymentStatus === 'ACTIVE' to 'PAID'
+    const payrolls = getItem(KEYS.PAYROLL, []);
+    let payrollChanged = false;
+    const migratedPayrolls = payrolls.map((p) => {
+      if (p.paymentStatus === 'ACTIVE') {
+        payrollChanged = true;
+        return { ...p, paymentStatus: 'PAID' };
+      }
+      return p;
+    });
+    if (payrollChanged) {
+      setItem(KEYS.PAYROLL, migratedPayrolls);
+    }
   }
   if (!localStorage.getItem(KEYS.DOCUMENTS)) {
     setItem(KEYS.DOCUMENTS, INITIAL_DOCUMENTS);
@@ -72,6 +123,17 @@ export const getUsers = () => getItem(KEYS.USERS, []);
 export const findUserByEmail = (email) => {
   const users = getUsers();
   return users.find((u) => u.email.toLowerCase() === email.toLowerCase());
+};
+
+export const findUserByIdentifier = (identifier) => {
+  const users = getUsers();
+  const lower = identifier.toLowerCase();
+  return users.find(
+    (u) =>
+      u.email.toLowerCase() === lower ||
+      u.employeeId.toLowerCase() === lower ||
+      u.name.toLowerCase() === lower
+  );
 };
 
 export const findUserById = (id) => {
@@ -102,7 +164,7 @@ export const createUser = (userData) => {
     grossSalary: 8000,
     netSalary: 7000,
     payPeriod: 'Current Month',
-    paymentStatus: 'ACTIVE'
+    paymentStatus: 'PAID'
   });
   setItem(KEYS.PAYROLL, payrolls);
 
@@ -165,6 +227,7 @@ export const checkInUser = (userId, customTime = null, notes = '') => {
     notes
   };
   setItem(`${KEYS.ACTIVE_PUNCH}${userId}`, activePunch);
+  window.dispatchEvent(new Event('dayflow_punch_update'));
   return activePunch;
 };
 
@@ -190,7 +253,9 @@ export const checkOutUser = (userId, customOutTime = null, notes = '') => {
   const hoursDecimal = (end - start) / (1000 * 60 * 60);
 
   let status = 'PRESENT';
-  if (hoursDecimal < 4) {
+  // For demo/testing: any punch under 2 minutes (0.033 hrs) is treated as a test punch and marked as PRESENT.
+  // Real working sessions between 2 minutes and 4 hours are marked as HALF_DAY.
+  if (hoursDecimal > 0.033 && hoursDecimal < 4) {
     status = 'HALF_DAY';
   }
 
@@ -212,6 +277,7 @@ export const checkOutUser = (userId, customOutTime = null, notes = '') => {
   setItem(KEYS.ATTENDANCE, attendanceList);
 
   localStorage.removeItem(`${KEYS.ACTIVE_PUNCH}${userId}`);
+  window.dispatchEvent(new Event('dayflow_punch_update'));
   return newRecord;
 };
 

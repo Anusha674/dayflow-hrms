@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { PunchCard } from './PunchCard';
@@ -14,9 +14,16 @@ export const EmployeeDashboard = () => {
   const [leaves, setLeaves] = useState(() => getUserLeaveRequests(activeUser.id));
   const payroll = getUserPayroll(activeUser.id);
 
-  const handlePunchSuccess = () => {
-    setAttendance(getUserAttendance(activeUser.id));
-  };
+  useEffect(() => {
+    const handlePunchUpdate = () => {
+      setAttendance(getUserAttendance(activeUser.id));
+    };
+
+    window.addEventListener('dayflow_punch_update', handlePunchUpdate);
+    return () => {
+      window.removeEventListener('dayflow_punch_update', handlePunchUpdate);
+    };
+  }, [activeUser]);
 
   const pendingLeavesCount = leaves.filter((l) => l.status === 'PENDING').length;
   const totalPresentDays = attendance.filter((a) => a.status === 'PRESENT').length;
@@ -49,7 +56,7 @@ export const EmployeeDashboard = () => {
 
       {/* Main Grid: Punch Card & Overview */}
       <div className="grid-2">
-        <PunchCard onPunchSuccess={handlePunchSuccess} />
+        <PunchCard />
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <div className="card liquid-glass">
