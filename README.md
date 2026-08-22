@@ -94,8 +94,31 @@ Dayflow HRMS is a modern, full-featured enterprise Human Resource Management Sys
 - **Frontend**: React 18, TypeScript, Vite
 - **Styling**: Vanilla CSS, Tailwind CSS, Framer Motion
 - **Icons**: Lucide React
-- **Storage & Database**: IndexedDB (Browser Local DB), LocalStorage
-- **Notifications**: Sonner
+- **Client Storage & Sync**: IndexedDB (Local Transactional Database)
+- **Backend Database**: **MySQL 8.0+** (InnoDB Engine, PyMySQL, SQLAlchemy ORM)
+- **Backend API**: Python 3.11, FastAPI, Uvicorn, Alembic
+
+---
+
+## 🐬 MySQL Backend Setup
+
+1. **Import MySQL Schema:**
+   ```bash
+   mysql -u root -p < src/backend/schema.sql
+   ```
+
+2. **Configure Database Connection:**
+   In `src/backend/.env`:
+   ```ini
+   DATABASE_URL=mysql+pymysql://root:password@localhost:3306/dayflow_hrms
+   ```
+
+3. **Run FastAPI Server:**
+   ```bash
+   cd src/backend
+   pip install -r requirements.txt
+   uvicorn app.main:app --reload --port 8000
+   ```
 
 ---
 
