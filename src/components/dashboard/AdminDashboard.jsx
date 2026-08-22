@@ -14,9 +14,9 @@ export const AdminDashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [departmentFilter, setDepartmentFilter] = useState('ALL');
 
-  const leaves = getLeaveRequests();
-  const attendance = getAttendance();
-  const payrolls = getPayrollList();
+  const [leaves, setLeaves] = useState(() => getLeaveRequests());
+  const [attendance, setAttendance] = useState(() => getAttendance());
+  const [payrolls, setPayrolls] = useState(() => getPayrollList());
 
   const pendingLeaves = leaves.filter((l) => l.status === 'PENDING');
   const todayDate = new Date().toISOString().split('T')[0];
@@ -43,12 +43,14 @@ export const AdminDashboard = () => {
     updateLeaveStatus(leaveId, 'APPROVED', 'Approved by Admin/HR Officer.');
     showToast('Leave request approved!', 'success');
     refreshNotifications();
+    setLeaves(getLeaveRequests());
   };
 
   const handleRejectLeave = (leaveId) => {
     updateLeaveStatus(leaveId, 'REJECTED', 'Rejected by HR Officer.');
     showToast('Leave request rejected.', 'info');
     refreshNotifications();
+    setLeaves(getLeaveRequests());
   };
 
   return (

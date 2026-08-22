@@ -4,7 +4,7 @@ import { useNotifications } from '../../context/NotificationContext';
 import { getActivePunch, checkInUser, checkOutUser, calculateWorkDuration } from '../../db/storage';
 import { Timer, CalendarCheck2, Clock4, CheckCircle2 } from 'lucide-react';
 
-export const PunchCard = () => {
+export const PunchCard = ({ onPunchSuccess }) => {
   const { activeUser } = useAuth();
   const { showToast } = useNotifications();
 
@@ -62,6 +62,7 @@ export const PunchCard = () => {
     setNotes('');
     setCustomInTime('');
     showToast(`Checked in at ${newPunch.displayTime}!`, 'success');
+    if (onPunchSuccess) onPunchSuccess();
   };
 
   const handleCheckOut = () => {
@@ -81,6 +82,7 @@ export const PunchCard = () => {
     setNotes('');
     setCustomOutTime('');
     showToast(`Checked out! Work duration: ${record.workHours} (${record.checkIn} to ${record.checkOut})`, 'info');
+    if (onPunchSuccess) onPunchSuccess();
   };
 
   return (
