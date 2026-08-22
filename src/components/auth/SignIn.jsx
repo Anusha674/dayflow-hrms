@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNotifications } from '../../context/NotificationContext';
-import { LogIn, Lock, Mail, UserCheck, KeyRound } from 'lucide-react';
+import { Lock, Mail } from 'lucide-react';
 
 export const SignIn = ({ onSwitchToSignUp }) => {
   const { login } = useAuth();
@@ -21,21 +21,26 @@ export const SignIn = ({ onSwitchToSignUp }) => {
     }
   };
 
-  const fillDemoAccount = (demoEmail, demoPassword) => {
-    setEmail(demoEmail);
-    setPassword(demoPassword);
-    setError('');
-  };
-
   return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem 1.5rem', background: 'transparent' }}>
-      <div className="card liquid-glass animate-fade-rise" style={{ width: '100%', maxWidth: '460px', padding: '2.75rem 2.25rem', background: 'hsl(201, 100%, 13%)' }}>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '2.75rem', fontWeight: 400, letterSpacing: '-1px', color: '#ffffff' }}>
-            Dayflow<sup style={{ fontSize: '1rem', verticalAlign: 'super' }}>®</sup>
+      <div className="card auth-card animate-fade-rise" style={{ width: '100%', maxWidth: '460px', padding: '2.75rem 2.25rem' }}>
+        
+        {/* Brand Logo & Subtext */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem', marginBottom: '2rem', textAlign: 'center' }}>
+          <h1 style={{ 
+            fontFamily: 'var(--font-body)', 
+            fontSize: '2.6rem', 
+            fontWeight: 800, 
+            letterSpacing: '-1.5px', 
+            background: 'linear-gradient(135deg, #ffffff 30%, #3B82F6 100%)', 
+            WebkitBackgroundClip: 'text', 
+            WebkitTextFillColor: 'transparent',
+            textShadow: '0 0 30px rgba(59, 130, 246, 0.2)'
+          }}>
+            Dayflow
           </h1>
-          <p style={{ color: 'hsl(var(--muted-foreground))', fontSize: '0.9rem', marginTop: '0.35rem' }}>
-            Where every workday rises through perfect alignment.
+          <p style={{ color: 'hsl(var(--muted-foreground))', fontSize: '0.9rem', marginTop: '0.15rem' }}>
+            Enter your credentials to access your workspace
           </p>
         </div>
 
@@ -45,76 +50,57 @@ export const SignIn = ({ onSwitchToSignUp }) => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label className="form-label">Email Address</label>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
+          <div>
+            <label style={{ fontSize: '0.75rem', fontWeight: 600, color: 'hsl(var(--muted-foreground))', marginBottom: '0.45rem', display: 'block' }}>
+              Work Email Address
+            </label>
             <div style={{ position: 'relative' }}>
+              <Mail size={16} style={{ position: 'absolute', left: '1.1rem', top: '50%', transform: 'translateY(-50%)', color: 'hsl(var(--muted-foreground))' }} />
               <input
                 type="email"
                 required
+                name="email"
+                autoComplete="username"
                 className="form-input"
-                placeholder="name@dayflow.com"
+                placeholder="name@company.com"
                 value={email}
+                style={{ paddingLeft: '2.75rem' }}
                 onChange={(e) => setEmail(e.target.value)}
-                style={{ paddingLeft: '2.5rem' }}
               />
-              <Mail size={18} style={{ position: 'absolute', left: '0.85rem', top: '50%', transform: 'translateY(-50%)', color: 'hsl(var(--muted-foreground))' }} />
             </div>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Password</label>
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.45rem' }}>
+              <label style={{ fontSize: '0.75rem', fontWeight: 600, color: 'hsl(var(--muted-foreground))', display: 'block' }}>
+                Password
+              </label>
+            </div>
             <div style={{ position: 'relative' }}>
+              <Lock size={16} style={{ position: 'absolute', left: '1.1rem', top: '50%', transform: 'translateY(-50%)', color: 'hsl(var(--muted-foreground))' }} />
               <input
                 type="password"
                 required
+                name="password"
+                autoComplete="current-password"
                 className="form-input"
                 placeholder="••••••••"
                 value={password}
+                style={{ paddingLeft: '2.75rem' }}
                 onChange={(e) => setPassword(e.target.value)}
-                style={{ paddingLeft: '2.5rem' }}
               />
-              <Lock size={18} style={{ position: 'absolute', left: '0.85rem', top: '50%', transform: 'translateY(-50%)', color: 'hsl(var(--muted-foreground))' }} />
             </div>
           </div>
 
-          <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '1rem', padding: '0.85rem' }}>
-            <LogIn size={18} /> Sign In
+          <button
+            type="submit"
+            className="btn btn-primary"
+            style={{ width: '100%', padding: '0.85rem', fontSize: '0.95rem', marginTop: '0.5rem' }}
+          >
+            Sign In
           </button>
         </form>
-
-        {/* Quick Demo Login Chips */}
-        <div style={{ marginTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.15)', paddingTop: '1.25rem' }}>
-          <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'hsl(var(--muted-foreground))', display: 'block', marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-            Quick Demo Login Chips
-          </span>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <button
-              onClick={() => fillDemoAccount('admin@dayflow.com', 'Password@123')}
-              className="btn btn-liquid btn-sm"
-              style={{ justifyContent: 'flex-start' }}
-            >
-              <UserCheck size={14} /> Admin: admin@dayflow.com
-            </button>
-
-            <button
-              onClick={() => fillDemoAccount('sarah@dayflow.com', 'Password@123')}
-              className="btn btn-liquid btn-sm"
-              style={{ justifyContent: 'flex-start' }}
-            >
-              <KeyRound size={14} /> Employee: sarah@dayflow.com
-            </button>
-
-            <button
-              onClick={() => fillDemoAccount('alex@dayflow.com', 'Password@123')}
-              className="btn btn-liquid btn-sm"
-              style={{ justifyContent: 'flex-start' }}
-            >
-              <KeyRound size={14} /> Employee: alex@dayflow.com
-            </button>
-          </div>
-        </div>
 
         <div style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.875rem' }}>
           Don't have an account?{' '}

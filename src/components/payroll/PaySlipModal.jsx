@@ -47,35 +47,35 @@ export const PaySlipModal = ({ isOpen, onClose, user, payroll }) => {
             <thead>
               <tr>
                 <th style={{ background: 'var(--primary-light)', color: 'var(--primary)' }}>Earnings</th>
-                <th style={{ background: 'var(--primary-light)', color: 'var(--primary)', textAlign: 'right' }}>Amount ($)</th>
+                <th style={{ background: 'var(--primary-light)', color: 'var(--primary)', textAlign: 'right' }}>Amount (₹)</th>
                 <th style={{ background: 'var(--danger-light)', color: 'var(--danger)' }}>Deductions</th>
-                <th style={{ background: 'var(--danger-light)', color: 'var(--danger)', textAlign: 'right' }}>Amount ($)</th>
+                <th style={{ background: 'var(--danger-light)', color: 'var(--danger)', textAlign: 'right' }}>Amount (₹)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Basic Salary</td>
-                <td style={{ textAlign: 'right' }}>${payroll.basicSalary}</td>
+                <td style={{ textAlign: 'right' }}>₹{payroll.basicSalary}</td>
                 <td>Provident Fund (PF)</td>
-                <td style={{ textAlign: 'right' }}>${payroll.pfDeduction}</td>
+                <td style={{ textAlign: 'right' }}>₹{payroll.pfDeduction}</td>
               </tr>
               <tr>
                 <td>House Rent Allowance (HRA)</td>
-                <td style={{ textAlign: 'right' }}>${payroll.hra}</td>
+                <td style={{ textAlign: 'right' }}>₹{payroll.hra}</td>
                 <td>Income Tax / TDS</td>
-                <td style={{ textAlign: 'right' }}>${payroll.taxDeduction}</td>
+                <td style={{ textAlign: 'right' }}>₹{payroll.taxDeduction}</td>
               </tr>
               <tr>
                 <td>Special / Performance Allowance</td>
-                <td style={{ textAlign: 'right' }}>${payroll.specialAllowance}</td>
+                <td style={{ textAlign: 'right' }}>₹{payroll.specialAllowance}</td>
                 <td>Other Deductions</td>
-                <td style={{ textAlign: 'right' }}>$0</td>
+                <td style={{ textAlign: 'right' }}>₹0</td>
               </tr>
               <tr style={{ fontWeight: 800, background: 'var(--bg-main)' }}>
                 <td>Gross Earnings</td>
-                <td style={{ textAlign: 'right', color: 'var(--primary)' }}>${payroll.grossSalary}</td>
+                <td style={{ textAlign: 'right', color: 'var(--primary)' }}>₹{payroll.grossSalary}</td>
                 <td>Total Deductions</td>
-                <td style={{ textAlign: 'right', color: 'var(--danger)' }}>${payroll.pfDeduction + payroll.taxDeduction}</td>
+                <td style={{ textAlign: 'right', color: 'var(--danger)' }}>₹{payroll.pfDeduction + payroll.taxDeduction}</td>
               </tr>
             </tbody>
           </table>
@@ -85,7 +85,7 @@ export const PaySlipModal = ({ isOpen, onClose, user, payroll }) => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--success-light)', padding: '1rem 1.25rem', borderRadius: 'var(--radius-sm)' }}>
           <div>
             <span style={{ fontSize: '0.85rem', color: 'var(--success)', fontWeight: 700 }}>NET SALARY PAID</span>
-            <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--success)' }}>${payroll.netSalary}</div>
+            <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--success)' }}>₹{payroll.netSalary}</div>
           </div>
           <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Direct Bank Transfer</span>
         </div>

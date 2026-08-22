@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { NotificationProvider } from './context/NotificationContext';
@@ -21,12 +21,38 @@ import { ResetDataView } from './components/common/ResetDataView';
 const MainLayout = () => {
   const { currentUser, activeUser, loading } = useAuth();
   const [authView, setAuthView] = useState('signin');
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 1024);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 1024;
+      setIsMobile(mobile);
+      if (mobile) {
+        setSidebarOpen(false);
+      } else {
+        setSidebarOpen(true);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontFamily: 'var(--font-display)', fontSize: '1.8rem', color: 'hsl(var(--foreground))' }}>
-        Dayflow®
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', color: 'hsl(var(--foreground))', background: 'hsl(201, 100%, 13%)' }}>
+        <span style={{ 
+          fontWeight: 800, 
+          fontSize: '2.5rem', 
+          background: 'linear-gradient(135deg, #ffffff 30%, #3B82F6 100%)', 
+          WebkitBackgroundClip: 'text', 
+          WebkitTextFillColor: 'transparent', 
+          letterSpacing: '-1px', 
+          fontFamily: 'var(--font-body)',
+          textShadow: '0 0 30px rgba(59, 130, 246, 0.2)'
+        }}>
+          Dayflow
+        </span>
       </div>
     );
   }
@@ -57,7 +83,23 @@ const MainLayout = () => {
       ) : (
         <div className="app-container">
           <Sidebar isOpen={sidebarOpen} onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-          <div className="main-wrapper">
+          {isMobile && sidebarOpen && (
+            <div 
+              onClick={() => setSidebarOpen(false)}
+              style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: 'rgba(0, 0, 0, 0.5)',
+                backdropFilter: 'blur(4px)',
+                zIndex: 45,
+                transition: 'opacity 0.3s ease'
+              }}
+            />
+          )}
+          <div className="main-wrapper" style={{ marginLeft: (!isMobile && sidebarOpen) ? '270px' : '0', transition: 'margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1)', width: '100%', minWidth: 0 }}>
             <Navbar sidebarOpen={sidebarOpen} onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
             <main className="content-body animate-fade-rise">
               <Routes>

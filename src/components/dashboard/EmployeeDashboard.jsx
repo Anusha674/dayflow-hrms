@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { PunchCard } from './PunchCard';
 import { ActivityTimeline } from '../common/ActivityTimeline';
 import { getUserAttendance, getUserLeaveRequests, getUserPayroll } from '../../db/storage';
-import { UserCheck, CalendarCheck2, CalendarOff, Receipt, ArrowRight, Activity } from 'lucide-react';
+import { UserCheck, CalendarCheck2, CalendarOff, IndianRupee, ArrowRight, Activity } from 'lucide-react';
 
 export const EmployeeDashboard = () => {
   const { activeUser } = useAuth();
@@ -65,7 +65,7 @@ export const EmployeeDashboard = () => {
 
               <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '1rem', borderRadius: '14px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
                 <span style={{ fontSize: '0.75rem', color: 'hsl(var(--muted-foreground))', fontWeight: 600 }}>MONTHLY NET SALARY</span>
-                <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#10B981', marginTop: '0.2rem', fontFamily: 'var(--font-display)' }}>${payroll.netSalary}</div>
+                <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#10B981', marginTop: '0.2rem', fontFamily: 'var(--font-display)' }}>₹{payroll.netSalary}</div>
               </div>
 
               <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '1rem', borderRadius: '14px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
@@ -128,7 +128,7 @@ export const EmployeeDashboard = () => {
 
           <div className="card liquid-glass" onClick={() => navigate('/payroll')} style={{ cursor: 'pointer' }}>
             <div style={{ background: 'rgba(255,255,255,0.06)', color: '#fff', width: '44px', height: '44px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
-              <Receipt size={22} />
+              <IndianRupee size={22} />
             </div>
             <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '1.3rem', fontWeight: 400, color: '#ffffff' }}>Payroll & Slips</h4>
             <p style={{ color: 'hsl(var(--muted-foreground))', fontSize: '0.85rem', margin: '0.35rem 0 1rem' }}>Salary slips & breakdown</p>

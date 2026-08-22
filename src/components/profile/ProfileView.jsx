@@ -123,7 +123,7 @@ export const ProfileView = () => {
 
             <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-color)', pb: '0.5rem' }}>
               <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>Net Monthly Salary</span>
-              <strong style={{ fontSize: '0.95rem', color: 'var(--success)' }}>${payroll.netSalary} / mo</strong>
+              <strong style={{ fontSize: '0.95rem', color: 'var(--success)' }}>₹{payroll.netSalary} / mo</strong>
             </div>
           </div>
         </div>

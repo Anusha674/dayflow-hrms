@@ -54,13 +54,49 @@ export const ProfileEditModal = ({ isOpen, onClose, user, isAdminView, onSave })
         </div>
 
         <div className="form-group">
-          <label className="form-label">Profile Avatar Image URL</label>
-          <input
-            type="text"
-            className="form-input"
-            value={formData.avatar}
-            onChange={(e) => setFormData({ ...formData, avatar: e.target.value })}
-          />
+          <label className="form-label">Choose Profile Avatar</label>
+          <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap', marginTop: '0.5rem', background: 'rgba(255,255,255,0.03)', padding: '0.75rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }}>
+            {[
+              'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix',
+              'https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka',
+              'https://api.dicebear.com/7.x/avataaars/svg?seed=Jack',
+              'https://api.dicebear.com/7.x/avataaars/svg?seed=Milo',
+              'https://api.dicebear.com/7.x/avataaars/svg?seed=Sophia',
+              'https://api.dicebear.com/7.x/avataaars/svg?seed=Tigger',
+              'https://api.dicebear.com/7.x/avataaars/svg?seed=Leo',
+              'https://api.dicebear.com/7.x/avataaars/svg?seed=Buster'
+            ].map((url) => {
+              const isSelected = formData.avatar === url;
+              return (
+                <button
+                  key={url}
+                  type="button"
+                  onClick={() => setFormData({ ...formData, avatar: url })}
+                  style={{
+                    background: 'none',
+                    border: isSelected ? '2.5px solid #10B981' : '1px solid rgba(255,255,255,0.2)',
+                    borderRadius: '50%',
+                    padding: '2px',
+                    cursor: 'pointer',
+                    width: '46px',
+                    height: '46px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: isSelected ? '0 0 10px rgba(16, 185, 129, 0.4)' : 'none',
+                    transition: 'all 0.2s ease',
+                    transform: isSelected ? 'scale(1.08)' : 'scale(1)'
+                  }}
+                >
+                  <img
+                    src={url}
+                    alt="Avatar option"
+                    style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
+                  />
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Admin Restricted Fields */}

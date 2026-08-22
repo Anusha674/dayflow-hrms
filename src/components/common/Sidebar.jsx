@@ -6,9 +6,8 @@ import {
   UserCheck,
   CalendarCheck2,
   CalendarOff,
-  Receipt,
+  IndianRupee,
   LineChart,
-  RotateCcw,
   X
 } from 'lucide-react';
 
@@ -62,7 +61,7 @@ export const Sidebar = ({ isOpen, onToggleSidebar }) => {
         </NavLink>
 
         <NavLink to="/payroll" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-          <Receipt size={18} />
+          <IndianRupee size={18} />
           <span>Payroll</span>
         </NavLink>
 
@@ -73,12 +72,6 @@ export const Sidebar = ({ isOpen, onToggleSidebar }) => {
           </NavLink>
         )}
 
-        <div style={{ margin: '1.5rem 0 0.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.15)', paddingTop: '1rem' }}>
-          <NavLink to="/reset" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} style={{ color: '#F43F5E' }}>
-            <RotateCcw size={18} />
-            <span>Reset Demo Data</span>
-          </NavLink>
-        </div>
       </nav>
     </aside>
   );

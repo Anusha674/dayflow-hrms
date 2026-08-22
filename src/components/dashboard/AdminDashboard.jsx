@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { getUsers, getLeaveRequests, getAttendance, getPayrollList, updateLeaveStatus } from '../../db/storage';
 import { useNotifications } from '../../context/NotificationContext';
 import { ScrollPillBar } from '../common/ScrollPillBar';
-import { Users2, CalendarCheck2, CalendarOff, Receipt, Search, CheckCircle, XCircle, UserCheck } from 'lucide-react';
+import { Users2, CalendarCheck2, CalendarOff, IndianRupee, Search, CheckCircle, XCircle, UserCheck } from 'lucide-react';
 
 export const AdminDashboard = () => {
   const { allUsers, switchViewAs } = useAuth();
@@ -71,7 +71,7 @@ export const AdminDashboard = () => {
           </div>
           <div>
             <span style={{ fontSize: '0.75rem', color: 'hsl(var(--muted-foreground))', fontWeight: 600 }}>TOTAL STAFF</span>
-            <div style={{ fontSize: '1.6rem', fontWeight: 400, fontFamily: 'var(--font-display)', color: '#ffffff' }}>{allUsers.length}</div>
+            <div style={{ fontSize: '2.2rem', fontWeight: 700, fontFamily: 'var(--font-body)', color: '#ffffff', lineHeight: 1.1, marginTop: '2px', letterSpacing: '-0.5px' }}>{allUsers.length}</div>
           </div>
         </div>
 
@@ -81,7 +81,7 @@ export const AdminDashboard = () => {
           </div>
           <div>
             <span style={{ fontSize: '0.75rem', color: 'hsl(var(--muted-foreground))', fontWeight: 600 }}>PRESENT TODAY</span>
-            <div style={{ fontSize: '1.6rem', fontWeight: 400, fontFamily: 'var(--font-display)', color: '#10B981' }}>{presentToday}</div>
+            <div style={{ fontSize: '2.2rem', fontWeight: 700, fontFamily: 'var(--font-body)', color: '#ffffff', lineHeight: 1.1, marginTop: '2px', letterSpacing: '-0.5px' }}>{presentToday}</div>
           </div>
         </div>
 
@@ -91,17 +91,17 @@ export const AdminDashboard = () => {
           </div>
           <div>
             <span style={{ fontSize: '0.75rem', color: 'hsl(var(--muted-foreground))', fontWeight: 600 }}>PENDING LEAVES</span>
-            <div style={{ fontSize: '1.6rem', fontWeight: 400, fontFamily: 'var(--font-display)', color: '#F59E0B' }}>{pendingLeaves.length}</div>
+            <div style={{ fontSize: '2.2rem', fontWeight: 700, fontFamily: 'var(--font-body)', color: '#ffffff', lineHeight: 1.1, marginTop: '2px', letterSpacing: '-0.5px' }}>{pendingLeaves.length}</div>
           </div>
         </div>
 
         <div className="card liquid-glass" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <div style={{ background: 'rgba(59, 130, 246, 0.15)', padding: '0.85rem', borderRadius: '14px' }}>
-            <Receipt size={24} color="#3B82F6" />
+            <IndianRupee size={24} color="#3B82F6" />
           </div>
           <div>
             <span style={{ fontSize: '0.75rem', color: 'hsl(var(--muted-foreground))', fontWeight: 600 }}>MONTHLY PAYROLL</span>
-            <div style={{ fontSize: '1.6rem', fontWeight: 400, fontFamily: 'var(--font-display)', color: '#3B82F6' }}>${totalPayrollBudget}</div>
+            <div style={{ fontSize: '2.2rem', fontWeight: 700, fontFamily: 'var(--font-body)', color: '#ffffff', lineHeight: 1.1, marginTop: '2px', letterSpacing: '-0.5px' }}>₹{totalPayrollBudget}</div>
           </div>
         </div>
       </div>
@@ -152,10 +152,10 @@ export const AdminDashboard = () => {
                       <td style={{ maxWidth: '250px', fontSize: '0.85rem' }}>{leave.reason}</td>
                       <td>
                         <div style={{ display: 'flex', gap: '0.5rem' }}>
-                          <button onClick={() => handleApproveLeave(leave.id)} className="btn btn-primary btn-sm">
+                          <button onClick={() => handleApproveLeave(leave.id)} className="btn btn-success btn-sm">
                             <CheckCircle size={14} /> Approve
                           </button>
-                          <button onClick={() => handleRejectLeave(leave.id)} className="btn btn-danger btn-sm">
+                          <button onClick={() => handleRejectLeave(leave.id)} className="btn btn-danger-light btn-sm">
                             <XCircle size={14} /> Reject
                           </button>
                         </div>
@@ -251,7 +251,7 @@ export const AdminDashboard = () => {
                         className="btn btn-outline btn-sm"
                         title="Manage payroll"
                       >
-                        <Receipt size={14} /> Payroll
+                        <IndianRupee size={14} /> Payroll
                       </button>
                     </div>
                   </td>

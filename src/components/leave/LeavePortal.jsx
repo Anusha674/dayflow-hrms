@@ -204,10 +204,10 @@ export const LeavePortal = () => {
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '1.5rem' }}>
-            <button onClick={() => handleProcessLeave('REJECTED')} className="btn btn-danger">
+            <button onClick={() => handleProcessLeave('REJECTED')} className="btn btn-danger-light">
               <XCircle size={16} /> Reject Application
             </button>
-            <button onClick={() => handleProcessLeave('APPROVED')} className="btn btn-accent">
+            <button onClick={() => handleProcessLeave('APPROVED')} className="btn btn-primary">
               <CheckCircle size={16} /> Approve Application
             </button>
           </div>

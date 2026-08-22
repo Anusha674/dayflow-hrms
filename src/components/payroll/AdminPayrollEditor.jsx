@@ -37,7 +37,7 @@ export const AdminPayrollEditor = ({ isOpen, onClose, user, payroll, onSave }) =
       <form onSubmit={handleSubmit}>
         <div className="grid-2">
           <div className="form-group">
-            <label className="form-label">Basic Salary ($)</label>
+            <label className="form-label">Basic Salary (₹)</label>
             <input
               type="number"
               required
@@ -48,7 +48,7 @@ export const AdminPayrollEditor = ({ isOpen, onClose, user, payroll, onSave }) =
           </div>
 
           <div className="form-group">
-            <label className="form-label">House Rent Allowance (HRA) ($)</label>
+            <label className="form-label">House Rent Allowance (HRA) (₹)</label>
             <input
               type="number"
               required
@@ -61,7 +61,7 @@ export const AdminPayrollEditor = ({ isOpen, onClose, user, payroll, onSave }) =
 
         <div className="grid-2">
           <div className="form-group">
-            <label className="form-label">Special Allowance ($)</label>
+            <label className="form-label">Special Allowance (₹)</label>
             <input
               type="number"
               required
@@ -84,7 +84,7 @@ export const AdminPayrollEditor = ({ isOpen, onClose, user, payroll, onSave }) =
 
         <div className="grid-2" style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1rem', marginTop: '0.5rem' }}>
           <div className="form-group">
-            <label className="form-label">PF Deduction ($)</label>
+            <label className="form-label">PF Deduction (₹)</label>
             <input
               type="number"
               required
@@ -95,7 +95,7 @@ export const AdminPayrollEditor = ({ isOpen, onClose, user, payroll, onSave }) =
           </div>
 
           <div className="form-group">
-            <label className="form-label">Income Tax Deduction ($)</label>
+            <label className="form-label">Income Tax Deduction (₹)</label>
             <input
               type="number"
               required
@@ -110,15 +110,15 @@ export const AdminPayrollEditor = ({ isOpen, onClose, user, payroll, onSave }) =
         <div style={{ background: 'var(--primary-light)', padding: '1rem', borderRadius: 'var(--radius-sm)', marginTop: '1rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.25rem' }}>
             <span>Gross Earnings:</span>
-            <strong>${gross}</strong>
+            <strong>₹{gross}</strong>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
             <span>Total Deductions:</span>
-            <strong style={{ color: 'var(--danger)' }}>-${pf + tax}</strong>
+            <strong style={{ color: 'var(--danger)' }}>-₹{pf + tax}</strong>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1rem', fontWeight: 800, color: 'var(--primary)', borderTop: '1px solid #ddd', paddingTop: '0.5rem' }}>
             <span>Calculated Net Salary:</span>
-            <span>${net} / month</span>
+            <span>₹{net} / month</span>
           </div>
         </div>
 

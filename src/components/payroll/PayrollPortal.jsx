@@ -55,17 +55,17 @@ export const PayrollPortal = () => {
         <div className="grid-3" style={{ gap: '1rem', marginBottom: '1.25rem' }}>
           <div style={{ background: 'var(--bg-main)', padding: '1rem', borderRadius: 'var(--radius-sm)' }}>
             <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>BASIC SALARY</span>
-            <div style={{ fontSize: '1.3rem', fontWeight: 800 }}>${userPayroll.basicSalary}</div>
+            <div style={{ fontSize: '1.3rem', fontWeight: 800 }}>₹{userPayroll.basicSalary}</div>
           </div>
 
           <div style={{ background: 'var(--bg-main)', padding: '1rem', borderRadius: 'var(--radius-sm)' }}>
             <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>ALLOWANCES (HRA + SPECIAL)</span>
-            <div style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--accent)' }}>${userPayroll.hra + userPayroll.specialAllowance}</div>
+            <div style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--accent)' }}>₹{userPayroll.hra + userPayroll.specialAllowance}</div>
           </div>
 
           <div style={{ background: 'var(--bg-main)', padding: '1rem', borderRadius: 'var(--radius-sm)' }}>
             <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>NET TAKE-HOME SALARY</span>
-            <div style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--success)' }}>${userPayroll.netSalary}</div>
+            <div style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--success)' }}>₹{userPayroll.netSalary}</div>
           </div>
         </div>
       </div>
@@ -103,12 +103,12 @@ export const PayrollPortal = () => {
                         <div style={{ fontWeight: 700 }}>{emp.name}</div>
                         <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{emp.designation}</div>
                       </td>
-                      <td>${pay.basicSalary}</td>
-                      <td>${pay.hra}</td>
-                      <td>${pay.specialAllowance}</td>
-                      <td style={{ color: 'var(--danger)' }}>-${pay.pfDeduction + pay.taxDeduction}</td>
+                      <td>₹{pay.basicSalary}</td>
+                      <td>₹{pay.hra}</td>
+                      <td>₹{pay.specialAllowance}</td>
+                      <td style={{ color: 'var(--danger)' }}>-₹{pay.pfDeduction + pay.taxDeduction}</td>
                       <td>
-                        <strong style={{ color: 'var(--success)', fontSize: '0.95rem' }}>${pay.netSalary}</strong>
+                        <strong style={{ color: 'var(--success)', fontSize: '0.95rem' }}>₹{pay.netSalary}</strong>
                       </td>
                       <td>
                         <span className="badge badge-info">{pay.payPeriod}</span>

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNotifications } from '../../context/NotificationContext';
-import { EmailVerificationModal } from './EmailVerificationModal';
-import { UserPlus, Mail, Lock, User, ShieldCheck } from 'lucide-react';
+import { Mail, Lock, User, ShieldCheck } from 'lucide-react';
 
 export const SignUp = ({ onSwitchToSignIn }) => {
   const { register } = useAuth();
@@ -22,7 +21,6 @@ export const SignUp = ({ onSwitchToSignIn }) => {
   });
 
   const [error, setError] = useState('');
-  const [showVerificationModal, setShowVerificationModal] = useState(false);
 
   const validatePassword = (pass) => {
     if (pass.length < 8) return 'Password must be at least 8 characters long.';
@@ -45,10 +43,6 @@ export const SignUp = ({ onSwitchToSignIn }) => {
       return;
     }
 
-    setShowVerificationModal(true);
-  };
-
-  const handleCompleteRegistration = () => {
     try {
       register({
         employeeId: formData.employeeId,
@@ -61,22 +55,31 @@ export const SignUp = ({ onSwitchToSignIn }) => {
         phone: formData.phone || '+1 (555) 100-2000',
         address: formData.address || 'Standard Corporate Address'
       });
-      setShowVerificationModal(false);
       showToast('Registration successful! Welcome to Dayflow HRMS.', 'success');
     } catch (err) {
-      setShowVerificationModal(false);
       setError(err.message);
     }
   };
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem 1.5rem', background: 'transparent' }}>
-      <div className="card liquid-glass animate-fade-rise" style={{ width: '100%', maxWidth: '540px', padding: '2.75rem 2.25rem', background: 'hsl(201, 100%, 13%)' }}>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '2.75rem', fontWeight: 400, letterSpacing: '-1px', color: 'hsl(var(--foreground))' }}>
-            Dayflow<sup style={{ fontSize: '1rem', verticalAlign: 'super' }}>®</sup>
+      <div className="card auth-card animate-fade-rise" style={{ width: '100%', maxWidth: '540px', padding: '2.75rem 2.25rem' }}>
+        
+        {/* Brand Logo & Subtext */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem', marginBottom: '2rem', textAlign: 'center' }}>
+          <h1 style={{ 
+            fontFamily: 'var(--font-body)', 
+            fontSize: '2.6rem', 
+            fontWeight: 800, 
+            letterSpacing: '-1.5px', 
+            background: 'linear-gradient(135deg, #ffffff 30%, #3B82F6 100%)', 
+            WebkitBackgroundClip: 'text', 
+            WebkitTextFillColor: 'transparent',
+            textShadow: '0 0 30px rgba(59, 130, 246, 0.2)'
+          }}>
+            Dayflow
           </h1>
-          <p style={{ color: 'hsl(var(--muted-foreground))', fontSize: '0.9rem', marginTop: '0.35rem' }}>
+          <p style={{ color: 'hsl(var(--muted-foreground))', fontSize: '0.9rem', marginTop: '0.15rem' }}>
             Register new employee or HR officer credentials
           </p>
         </div>
@@ -130,6 +133,8 @@ export const SignUp = ({ onSwitchToSignIn }) => {
             <input
               type="email"
               required
+              name="email"
+              autoComplete="username"
               className="form-input"
               placeholder="name@dayflow.com"
               value={formData.email}
@@ -172,6 +177,8 @@ export const SignUp = ({ onSwitchToSignIn }) => {
               <input
                 type="password"
                 required
+                name="password"
+                autoComplete="new-password"
                 className="form-input"
                 placeholder="At least 8 chars"
                 value={formData.password}
@@ -184,6 +191,8 @@ export const SignUp = ({ onSwitchToSignIn }) => {
               <input
                 type="password"
                 required
+                name="confirmPassword"
+                autoComplete="new-password"
                 className="form-input"
                 placeholder="Confirm password"
                 value={formData.confirmPassword}
@@ -192,8 +201,25 @@ export const SignUp = ({ onSwitchToSignIn }) => {
             </div>
           </div>
 
-          <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '1rem', padding: '0.85rem' }}>
-            <UserPlus size={18} /> Register & Verify Email
+          <button 
+            type="submit" 
+            className="btn btn-primary btn-liquid" 
+            style={{ 
+              width: '100%', 
+              marginTop: '1rem', 
+              padding: '0.85rem',
+              background: 'linear-gradient(135deg, #3B82F6 0%, #10B981 100%)',
+              border: 'none',
+              fontWeight: 700,
+              fontSize: '0.95rem',
+              letterSpacing: '0.5px',
+              boxShadow: '0 4px 15px rgba(59, 130, 246, 0.4)',
+              borderRadius: '12px',
+              cursor: 'pointer',
+              color: '#fff'
+            }}
+          >
+            Register Account
           </button>
         </form>
 
@@ -203,13 +229,6 @@ export const SignUp = ({ onSwitchToSignIn }) => {
             Sign In Here
           </button>
         </div>
-
-        <EmailVerificationModal
-          isOpen={showVerificationModal}
-          email={formData.email}
-          onVerify={handleCompleteRegistration}
-          onClose={() => setShowVerificationModal(false)}
-        />
       </div>
     </div>
   );

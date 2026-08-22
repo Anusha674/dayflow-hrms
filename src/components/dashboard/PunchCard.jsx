@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNotifications } from '../../context/NotificationContext';
 import { getActivePunch, checkInUser, checkOutUser, calculateWorkDuration } from '../../db/storage';
-import { Timer, LogIn, LogOut, CalendarCheck2, Clock4, CheckCircle2 } from 'lucide-react';
+import { Timer, CalendarCheck2, Clock4, CheckCircle2 } from 'lucide-react';
 
 export const PunchCard = () => {
   const { activeUser } = useAuth();
@@ -22,18 +22,41 @@ export const PunchCard = () => {
   }, [activeUser]);
 
   useEffect(() => {
+    let timerId = null;
+
+    const updateTimer = () => {
+      if (activePunch) {
+        const nowIso = new Date().toISOString();
+        const duration = calculateWorkDuration(activePunch.checkInTime, nowIso);
+        setCalculatedHours(duration);
+      } else {
+        setCalculatedHours('0h 0m');
+      }
+    };
+
+    updateTimer();
+
     if (activePunch) {
-      const nowIso = new Date().toISOString();
-      const duration = calculateWorkDuration(activePunch.checkInTime, nowIso);
-      setCalculatedHours(duration);
-    } else {
-      setCalculatedHours('0h 0m');
+      timerId = setInterval(updateTimer, 1000);
     }
+
+    return () => {
+      if (timerId) clearInterval(timerId);
+    };
   }, [activePunch]);
 
   const handleCheckIn = () => {
     if (!activeUser) return;
-    const timeVal = customInTime ? new Date(`${new Date().toISOString().split('T')[0]}T${customInTime}`).toISOString() : null;
+    let timeVal = null;
+    if (customInTime) {
+      const [hours, minutes] = customInTime.split(':').map(Number);
+      const d = new Date();
+      d.setHours(hours);
+      d.setMinutes(minutes);
+      d.setSeconds(0);
+      d.setMilliseconds(0);
+      timeVal = d.toISOString();
+    }
     const newPunch = checkInUser(activeUser.id, timeVal, notes);
     setActivePunch(newPunch);
     setNotes('');
@@ -43,7 +66,16 @@ export const PunchCard = () => {
 
   const handleCheckOut = () => {
     if (!activeUser) return;
-    const timeVal = customOutTime ? new Date(`${new Date().toISOString().split('T')[0]}T${customOutTime}`).toISOString() : null;
+    let timeVal = null;
+    if (customOutTime) {
+      const [hours, minutes] = customOutTime.split(':').map(Number);
+      const d = new Date();
+      d.setHours(hours);
+      d.setMinutes(minutes);
+      d.setSeconds(0);
+      d.setMilliseconds(0);
+      timeVal = d.toISOString();
+    }
     const record = checkOutUser(activeUser.id, timeVal, notes);
     setActivePunch(null);
     setNotes('');
@@ -52,7 +84,7 @@ export const PunchCard = () => {
   };
 
   return (
-    <div className="card liquid-glass" style={{ background: 'hsl(201, 100%, 13%)' }}>
+    <div className="card liquid-glass">
       <div className="card-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
           <div style={{ background: 'rgba(255, 255, 255, 0.08)', padding: '0.5rem', borderRadius: '10px', color: '#fff' }}>
@@ -82,7 +114,7 @@ export const PunchCard = () => {
               CHECK-IN TIME
             </span>
             <div style={{ fontSize: '1.25rem', fontWeight: 700, color: activePunch ? '#10B981' : 'hsl(var(--muted-foreground))', marginTop: '0.2rem' }}>
-              {activePunch ? activePunch.displayTime : '--:--'}
+              {activePunch ? activePunch.displayTime : '—'}
             </div>
           </div>
 
@@ -167,11 +199,11 @@ export const PunchCard = () => {
         <div style={{ display: 'flex', gap: '1rem' }}>
           {!activePunch ? (
             <button onClick={handleCheckIn} className="btn btn-primary" style={{ flex: 1, padding: '0.85rem' }}>
-              <LogIn size={18} /> CHECK IN
+              CHECK IN
             </button>
           ) : (
             <button onClick={handleCheckOut} className="btn btn-danger" style={{ flex: 1, padding: '0.85rem' }}>
-              <LogOut size={18} /> CHECK OUT & CALCULATE
+              CHECK OUT & CALCULATE
             </button>
           )}
         </div>
