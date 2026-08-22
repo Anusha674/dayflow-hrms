@@ -711,3 +711,171 @@ h1, h2, h3, .font-serif-title {
   height: 92px;
   border: 2px solid rgba(255, 255, 255, 0.3);
 }
+
+/* Responsive application shell */
+@media (max-width: 900px) {
+  .content-body {
+    padding: 1.5rem;
+  }
+
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(280px, 84vw);
+    min-height: 100vh;
+    padding-top: 1.25rem;
+    transform: translateX(0);
+  }
+
+  .sidebar.closed {
+    margin-left: 0;
+    opacity: 1;
+    pointer-events: none;
+    transform: translateX(-100%);
+  }
+
+  .navbar {
+    height: auto;
+    min-height: 72px;
+    padding: 0.75rem 1.5rem;
+    gap: 1rem;
+  }
+
+  .navbar-right {
+    gap: 0.75rem;
+  }
+
+  .portal-switcher {
+    max-width: 280px;
+  }
+
+  .portal-switcher select {
+    max-width: 135px;
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .content-body {
+    padding: 1rem;
+  }
+
+  .navbar {
+    min-height: 64px;
+    padding: 0.65rem 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.7rem;
+  }
+
+  .navbar-right {
+    margin-left: auto;
+  }
+
+  .portal-switcher,
+  .navbar-user > div {
+    display: none !important;
+  }
+
+  .navbar-user {
+    border-left: 0 !important;
+    padding-left: 0 !important;
+    gap: 0.45rem !important;
+  }
+
+  .navbar-user .avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .navbar-user .btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+  }
+
+  .card {
+    border-radius: var(--radius-sm);
+    padding: 1.25rem;
+  }
+
+  .card-header {
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  .card-title {
+    font-size: 1.35rem;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .table-responsive {
+    margin: 0 -0.25rem;
+  }
+
+  .table {
+    min-width: 680px;
+  }
+
+  .table th,
+  .table td {
+    padding: 0.8rem;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    font-size: 16px;
+  }
+
+  .modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modal-card {
+    max-height: 92vh;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .modal-footer {
+    flex-wrap: wrap;
+  }
+
+  .toast-container {
+    left: 1rem;
+    right: 1rem;
+    bottom: 5.75rem;
+  }
+
+  .toast {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .fab-container {
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .fab-item {
+    padding: 0.65rem 0.9rem;
+  }
+}

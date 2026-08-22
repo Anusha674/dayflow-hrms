@@ -62,6 +62,38 @@ export const INITIAL_USERS = [
     dateOfJoining: "2023-06-10",
     emergencyContact: "+1 (555) 665-4433",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"
+  },
+  {
+    id: "usr_emp4",
+    employeeId: "EMP-1005",
+    name: "Marcus Chen",
+    email: "marcus@dayflow.com",
+    password: "Password@123",
+    role: "EMPLOYEE",
+    department: "Finance & Accounting",
+    designation: "Financial Analyst",
+    phone: "+1 (555) 567-8921",
+    address: "220 Lakeview Ave, Seattle, WA",
+    dob: "1990-07-16",
+    dateOfJoining: "2024-01-08",
+    emergencyContact: "+1 (555) 440-2819",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80"
+  },
+  {
+    id: "usr_emp5",
+    employeeId: "EMP-1006",
+    name: "Nadia Brooks",
+    email: "nadia@dayflow.com",
+    password: "Password@123",
+    role: "EMPLOYEE",
+    department: "Engineering",
+    designation: "Backend Engineer",
+    phone: "+1 (555) 678-1450",
+    address: "18 Willow Street, Denver, CO",
+    dob: "1994-12-03",
+    dateOfJoining: "2024-04-22",
+    emergencyContact: "+1 (555) 391-7642",
+    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80"
   }
 ];
 
@@ -207,6 +239,32 @@ export const INITIAL_PAYROLL = [
     taxDeduction: 1200,
     grossSalary: 14400,
     netSalary: 12180,
+    payPeriod: "August 2026",
+    paymentStatus: "PAID"
+  },
+  {
+    id: "pay_usr_emp4",
+    userId: "usr_emp4",
+    basicSalary: 6200,
+    hra: 2480,
+    specialAllowance: 1320,
+    pfDeduction: 744,
+    taxDeduction: 600,
+    grossSalary: 10000,
+    netSalary: 8656,
+    payPeriod: "August 2026",
+    paymentStatus: "PAID"
+  },
+  {
+    id: "pay_usr_emp5",
+    userId: "usr_emp5",
+    basicSalary: 6800,
+    hra: 2720,
+    specialAllowance: 1480,
+    pfDeduction: 816,
+    taxDeduction: 720,
+    grossSalary: 11000,
+    netSalary: 9464,
     payPeriod: "August 2026",
     paymentStatus: "PAID"
   }

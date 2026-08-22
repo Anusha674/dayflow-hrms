@@ -11,7 +11,7 @@ export const Navbar = ({ sidebarOpen, onToggleSidebar }) => {
   return (
     <header className="navbar relative z-10">
       {/* Sidebar Toggle & Brand Logo */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      <div className="navbar-left" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <button
           onClick={onToggleSidebar}
           className="liquid-glass btn-liquid"
@@ -39,7 +39,7 @@ export const Navbar = ({ sidebarOpen, onToggleSidebar }) => {
       <div className="navbar-right">
         {/* Admin Impersonation Switcher */}
         {currentUser?.role === 'ADMIN' && (
-          <div className="liquid-glass" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.45rem 1rem', borderRadius: '9999px', fontSize: '0.85rem' }}>
+          <div className="portal-switcher liquid-glass" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.45rem 1rem', borderRadius: '9999px', fontSize: '0.85rem' }}>
             <ShieldCheck size={15} color="hsl(var(--muted-foreground))" />
             <span style={{ fontWeight: 500, color: 'hsl(var(--muted-foreground))' }}>Portal View:</span>
             <select
@@ -160,7 +160,7 @@ export const Navbar = ({ sidebarOpen, onToggleSidebar }) => {
         </div>
 
         {/* User Profile Info & Logout Button */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', borderLeft: '1px solid rgba(255,255,255,0.15)', paddingLeft: '1.25rem' }}>
+        <div className="navbar-user" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', borderLeft: '1px solid rgba(255,255,255,0.15)', paddingLeft: '1.25rem' }}>
           <img src={activeUser?.avatar || 'https://via.placeholder.com/44'} alt={activeUser?.name} className="avatar" />
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ fontWeight: 600, fontSize: '0.875rem' }}>{activeUser?.name}</span>
