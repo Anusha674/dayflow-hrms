@@ -1,4 +1,4 @@
-#  Dayflow HRMS — Human Resource Management System
+#  Dayflow HRMS :— Human Resource Management System
 
 Dayflow HRMS is a modern, full-featured enterprise Human Resource Management System featuring a **Liquid Glass Design System**, dynamic looping video background, offline-first data sync, role-enforced security, and an interactive PDF Document Vault.
 
