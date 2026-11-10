@@ -29,13 +29,13 @@ Dayflow HRMS is a modern, full-featured enterprise Human Resource Management Sys
 - Automated monthly payroll engine computing basic salary, allowances, statutory deductions, and net salary.
 - Printable PDF payslips for employees and HR officers.
 
-###  6. Offline-First Architecture & Audit Logging
+###  6. Offline First Architecture & Audit Logging
 - IndexedDB outbox system that queues attendance check-ins and leave requests offline and synchronizes automatically upon reconnecting.
 - Immutable audit log tracking every user action for compliance.
 
 ---
 
-##  Sign-In Credentials
+##  SignIn Credentials
 
 > **Universal Password for ALL pre-seeded accounts:** `Dayflow@2026`
 
